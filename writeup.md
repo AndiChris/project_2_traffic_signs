@@ -1,8 +1,6 @@
 # **Traffic Sign Recognition** 
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+## Writeup
 
 ---
 
@@ -22,12 +20,12 @@ The goals / steps of this project are the following:
 [image1]: ./hist_train.png "Visualization"
 [image2]: ./hist_valid.png "Visualization"
 [image3]: ./hist_test.png "Visualization"
-[image4]: ./sign_color.jpg "Original"
-[image5]: ./sign_gray.jpg "Grayscaling"
+[image4]: ./sign_color.png "Original"
+[image5]: ./sign_gray.png "Grayscaling"
 [image6]: ./web_imgs/small_1.jpg "Traffic Sign 1"
 [image7]: ./web_imgs/small_2.jpg "Traffic Sign 2"
 [image8]: ./web_imgs/small_3.jpg "Traffic Sign 3"
-[image9]: ./web_imgs/samll_4.jpg "Traffic Sign 4"
+[image9]: ./web_imgs/small_4.jpg "Traffic Sign 4"
 [image10]: ./web_imgs/small_5.jpg "Traffic Sign 5"
 
 ## Rubric Points
@@ -38,7 +36,7 @@ The goals / steps of this project are the following:
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! and here is a link to my [project code](https://github.com/AndiChris/project_2_traffic_signs/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
@@ -79,24 +77,24 @@ As a last step, I normalized the image data because neuronal nets tend to train 
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
+| Layer                 |     Description                               | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x1 Grayscale image   					| 
-| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6    |
-| RELU					|												|
-| Max pooling	      	| 2x2 stride, valid padding, outputs 14x14x6    |
-| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x16   |
-| RELU					|												|
-| Max pooling	      	| 2x2 stride, valid padding, outputs 5x5x16     |
-| Flatten               | outputs 400									|
+| Input                 | 32x32x1 Grayscale image                       | 
+| Convolution 5x5       | 1x1 stride, valid padding, outputs 28x28x6    |
+| RELU                  |                                               |
+| Max pooling           | 2x2 stride, valid padding, outputs 14x14x6    |
+| Convolution 5x5       | 1x1 stride, valid padding, outputs 10x10x16   |
+| RELU                  |                                               |
+| Max pooling           | 2x2 stride, valid padding, outputs 5x5x16     |
+| Flatten               | outputs 400                                   |
 | Dropout               |                                               |
-| Fully connected		| outputs 120, mean 0, stddev 0.1               |
+| Fully connected       | outputs 120, mean 0, stddev 0.1               |
 | RELU                  |                                               |
 | Fully connected       | outputs 84, mean 0, stddev 0.1                |
 | RELU                  |                                               |
 | Dropout               |                                               |
 | Fully connected       | outputs 43,  mean 0, stddev 0.1               |
-| Softmax				|            									|
+| Softmax               |                                               |
  
 
 
@@ -116,25 +114,26 @@ My final model results were:
 * validation set accuracy of 95.9%
 * test set accuracy of 93.7%
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
+An iterative approach was chosen:
+* **What was the first architecture that was tried and why was it chosen?**  
 I started with the LeNet architecture from the LeNet lab solution because this architecture is already known to perform well on this sort of problems.
 
-* What were some problems with the initial architecture?
+
+* **What were some problems with the initial architecture?**  
 Overfitting with a to low validation accuracy of ~89%
 
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-First I introduced dropout layers because I wanted to reduce overfitting which was the case with my architecture at first. After some iterations of evaluating I went with two dropout layers located before the first and the last fully-connected layers.
-As a second method I added L2-regularization to the loss calculation. This also helped increase overhaul accuracy.
 
-* Which parameters were tuned? How were they adjusted and why?
-The dropout probability was set to 0.6. It was an iterative approach as different number and location of dropout layers seemed to have impact on which probability works well. But in general the values were always between 0.5 and 0.8.
+* **How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.**  
+First I introduced dropout layers because I wanted to reduce overfitting which was the case with my architecture at first. After some iterations of evaluating I went with two dropout layers located before the first and the last fully-connected layers.  
+As a second method I added L2-regularization to the loss calculation. This also helped decrease overfitting.
 
+
+* **Which parameters were tuned? How were they adjusted and why?**  
+The dropout probability was set to 0.6. It was an iterative approach as different number and location of dropout layers seemed to have impact on which probability works well. But in general the values were always between 0.5 and 0.8.  
 Additionally the learning rate was adjusted to 0.003. This was done after plotting of the loss over the epochs. The first run with the default rate of 0.001 seemed to have a to slow decrease in loss. A value much higher had a fast first decrease followed by a plateau. 0.003 seemed to have a good balance between first decrease and good improvement over all epochs.
 
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-A convolution layer works very well for this sort of problem because it exploits statistical invariants. For the traffic sign problem for example it does not matter where the sign in the image is. Its still the same sign so the network does not have to learn all cases separately.
-
+* **What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?**  
+A convolution layer works very well for this sort of problem because it exploits statistical invariants. For the traffic sign problem for example it does not matter where the sign in the image is. Its still the same sign so the network does not have to learn all cases separately.  
 A dropout layer helps a lot because it introduces some random constrain when training. This way the net is prevented to over-train on the training set which will lead to bad performance on new unseen data.
 
 
@@ -157,13 +156,13 @@ The third, forth and fifth should be easy to classify because there are good cle
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
+| Image                 |     Prediction                                | 
 |:---------------------:|:---------------------------------------------:| 
-| Pedestrians      		| Ahead only   									| 
-| Stop     		        | Road work 									|
-| 70 km/h				| 70 km/h										|
-| Yield 	      		| Yield					 		         		|
-| Priority Road			| Priority Road      							|
+| Pedestrians           | Ahead only                                    | 
+| Stop                  | Road work                                     |
+| 70 km/h               | 70 km/h                                       |
+| Yield                 | Yield                                         |
+| Priority Road         | Priority Road                                 |
 
 
 The model was able to correctly guess 3 of the 5 traffic signs, which gives an accuracy of 60%. Compared to the accuracy on the test set of 93.7% this is not quite good. But I think with further tweaking this can be increased. 
@@ -174,13 +173,13 @@ The code for making predictions on my final model is located in the 21th cell of
 
 For the first image, the model is not able to tell that this is a pedestrian sign. As mentioned above this is due to the different pedestrian sign in the training set. However interestingly it predicts with 19% a "Ahead only" sign. If one looks at this sign the similarities are obvious. Both are an round sign with some white straight figure in the middle. In one case its an arrow and in the other a walking person.
 
-| Probability         	|     Prediction	        					| 
+| Probability           |     Prediction                                | 
 |:---------------------:|:---------------------------------------------:| 
-| .195         			| Ahead only   			                        | 
-| .095     				| Turn left ahead 		                        |
-| .093					| Children crossing		                        |
-| .062	      			| Go straight or right	                        |
-| .053				    | Turn right ahead                              |
+| .195                  | Ahead only                                    | 
+| .095                  | Turn left ahead                               |
+| .093                  | Children crossing                             |
+| .062                  | Go straight or right                          |
+| .053                  | Turn right ahead                              |
 
 
 For the second image the model is absolutely unsure. Even in the top 5 probabilities the stop sign is not predicted.
@@ -193,8 +192,7 @@ For the second image the model is absolutely unsure. Even in the top 5 probabili
 | .028                  | Right-of-way at the next intersection         |
 | .019                  | Bicycle crossing                              |
 
-The third image is predicted correctly but with quite low accuracy. But the first 3 a very likely because the difference between
-a 7, 3 and a 2 is really minor. So accumulated one can say it predicted with 22.8% a speed limit sign. This is not that bad.
+The third image is predicted correctly but with quite low accuracy. But the first three signs are very simillar beeing different only in the first digit (i.e. 70, 30 or 20). So accumulated one could argue it predicted with 22.8% a speed limit sign.
 
 | Probability           |     Prediction                                | 
 |:---------------------:|:---------------------------------------------:| 
